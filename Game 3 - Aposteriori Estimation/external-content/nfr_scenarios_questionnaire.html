@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFR Scenarios Questionnaire | SimSE Model 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .info-box strong {
+            color: #1976d2;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            color: #495057;
+        }
+
+        .nav-btn:hover {
+            border-color: #2196f3;
+            color: #2196f3;
+            background: #f8f9fa;
+        }
+
+        .nav-btn.active {
+            background: #2196f3;
+            color: white;
+            border-color: #2196f3;
+        }
+
+        .scenario-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f1f3f5;
+        }
+
+        .scenario-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .scenario-number {
+            background: #2196f3;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .regression-graph {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .regression-graph img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .graph-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 20px;
+        }
+
+        .ranges-legend {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .ranges-legend h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .range-item {
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .range-letter {
+            font-weight: 700;
+            min-width: 70px;
+            color: #495057;
+        }
+
+        .nfr-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .nfr-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .nfr-table thead {
+            background: #f8f9fa;
+        }
+
+        .nfr-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .nfr-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f1f3f5;
+        }
+
+        .nfr-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .nfr-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .nfr-name {
+            color: #212529;
+            font-weight: 500;
+        }
+
+        .nfr-level {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .level-low {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .level-nominal {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .level-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .level-very-high {
+            background: #d6d8db;
+            color: #1b1e21;
+        }
+
+        .weights-reference {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .weights-reference h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .weights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .weight-ref-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .weight-ref-level {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .weight-ref-value {
+            background: #2196f3;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .question-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .question-box h3 {
+            color: #856404;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            color: #212529;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .navigation-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #1976d2;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #545b62;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .scenario-card {
+                padding: 25px 20px;
+            }
+
+            .nfr-table th,
+            .nfr-table td {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+
+            .navigation-controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NFR Scenarios Questionnaire</h1>
+            <p class="subtitle">Non-Functional Requirements Effort Estimation - SimSE Model 3</p>
+        </header>
+
+        <div class="info-box">
+            <strong>📚 Reference Guide</strong>
+            Use this reference to review the 10 NFR scenarios before playing in SimSE. Each scenario shows different combinations of Non-Functional Requirements levels.
+        </div>
+
+        <div class="scenario-card">
+            <div class="regression-graph">
+                <h3 class="graph-title">Linear Regression Model - Effort Estimation Ranges</h3>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" 
+                     alt="Regression Graph" 
+                     style="background: #f0f0f0; padding: 40px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+                <div class="ranges-legend">
+                    <h3>5 Effort Estimation Ranges:</h3>
+                    <div class="range-item">
+                        <span class="range-letter">Range 1</span>
+                        <span>Over +MMRE</span>
+                    </div>
+                    <div class="range-item">
+                        <span class="range-letter">Range 2</span>
+                        <span>From the equation to +MMRE</span>
+                    </div>
+                    <div class="range-item">
+                        <span class="range-letter">Range 3</span>
+                        <span>On the equation.</span>
+                    </div>
+                    <div class="range-item">
+                        <span class="range-letter">Range 4</span>
+                        <span>From the equation to -MMRE</span>
+                    </div>
+                    <div class="range-item">
+                        <span class="range-letter">Range 5</span>
+                        <span>Below -MMRE</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="nav-btn active" onclick="showScenario(0)">Scenario 1</button>
+                <button class="nav-btn" onclick="showScenario(1)">Scenario 2</button>
+                <button class="nav-btn" onclick="showScenario(2)">Scenario 3</button>
+                <button class="nav-btn" onclick="showScenario(3)">Scenario 4</button>
+                <button class="nav-btn" onclick="showScenario(4)">Scenario 5</button>
+                <button class="nav-btn" onclick="showScenario(5)">Scenario 6</button>
+                <button class="nav-btn" onclick="showScenario(6)">Scenario 7</button>
+                <button class="nav-btn" onclick="showScenario(7)">Scenario 8</button>
+                <button class="nav-btn" onclick="showScenario(8)">Scenario 9</button>
+                <button class="nav-btn" onclick="showScenario(9)">Scenario 10</button>
+            </div>
+
+            <div class="scenario-header">
+                <h2 class="scenario-title" id="scenarioTitle">Scenario 1</h2>
+                <div class="scenario-number" id="scenarioNumber">Scenario 1 of 10</div>
+            </div>
+
+            <div class="nfr-section">
+                <h3 class="section-title">1) NFR attributes of this project are displayed in the table.</h3>
+                <table class="nfr-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px; text-align: center;">#</th>
+                            <th>Types of non-functional requirements</th>
+                            <th style="width: 200px; text-align: center;" id="scenarioColumnHeader">Scenario 1</th>
+                        </tr>
+                    </thead>
+                    <tbody id="nfrTableBody">
+                        <!-- Table rows will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="weights-reference">
+                <h3>2) Weights for each level</h3>
+                <div class="weights-grid">
+                    <div class="weight-ref-item">
+                        <span class="weight-ref-level">Low</span>
+                        <span class="weight-ref-value">1</span>
+                    </div>
+                    <div class="weight-ref-item">
+                        <span class="weight-ref-level">Nominal</span>
+                        <span class="weight-ref-value">2</span>
+                    </div>
+                    <div class="weight-ref-item">
+                        <span class="weight-ref-level">High</span>
+                        <span class="weight-ref-value">3</span>
+                    </div>
+                    <div class="weight-ref-item">
+                        <span class="weight-ref-level">Very High</span>
+                        <span class="weight-ref-value">4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-box">
+                <h3>Question:</h3>
+                <p class="question-text">
+                    When the project has this scenario of levels of Non-Functional requirements, which one of the 5 effort estimation ranges should be selected?
+                </p>
+            </div>
+
+            <div class="info-box" style="background: #d1ecf1; border-left-color: #0c5460;">
+                <strong style="color: #0c5460;">💡 How to Answer</strong>
+                This is a reference questionnaire. To submit your answer and play through the scenarios, please use the SimSE application.
+            </div>
+
+            <div class="navigation-controls">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousScenario()" disabled>
+                    ← Previous Scenario
+                </button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextScenario()">
+                    Next Scenario →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define all 10 scenarios - only the NFR levels change
+        const scenarios = [
+            {
+                id: 1,
+                name: "Scenario 1",
+                requirements: [
+                    { name: "Performance requirements", level: "Low" },
+                    { name: "Interface requirements", level: "Low" },
+                    { name: "Operational requirements", level: "Low" },
+                    { name: "Resource requirements", level: "Low" },
+                    { name: "Design requirements & implementation constraints", level: "Low" },
+                    { name: "Security and privacy requirements", level: "Low" },
+                    { name: "Portability requirements", level: "Low" },
+                    { name: "Software quality requirements", level: "Low" },
+                    { name: "Software reliability requirements", level: "Low" },
+                    { name: "Software maintainability requirements", level: "Low" },
+                    { name: "Software safety requirements", level: "Low" },
+                    { name: "Software configuration and delivery requirements", level: "Low" },
+                    { name: "Data definition and database requirements", level: "Low" },
+                    { name: "Human factor-related requirements", level: "Low" },
+                    { name: "Adaptation and installation requirements", level: "Low" },
+                    { name: "Other requirements", level: "Low" }
+                ]
+            },
+            {
+                id: 2,
+                name: "Scenario 2",
+                requirements: [
+                    { name: "Performance requirements", level: "Nominal" },
+                    { name: "Interface requirements", level: "High" },
+                    { name: "Operational requirements", level: "Nominal" },
+                    { name: "Resource requirements", level: "Low" },
+                    { name: "Design requirements & implementation constraints", level: "High" },
+                    { name: "Security and privacy requirements", level: "Very High" },
+                    { name: "Portability requirements", level: "Nominal" },
+                    { name: "Software quality requirements", level: "High" },
+                    { name: "Software reliability requirements", level: "Nominal" },
+                    { name: "Software maintainability requirements", level: "Nominal" },
+                    { name: "Software safety requirements", level: "Low" },
+                    { name: "Software configuration and delivery requirements", level: "Nominal" },
+                    { name: "Data definition and database requirements", level: "Low" },
+                    { name: "Human factor-related requirements", level: "Nominal" },
+                    { name: "Adaptation and installation requirements", level: "Low" },
+                    { name: "Other requirements", level: "Low" }
+                ]
+            }
+            // Add scenarios 3-10 here with the same structure
+        ];
+
+        let currentScenario = 0;
+
+        function renderTable(scenario) {
+            const tbody = document.getElementById('nfrTableBody');
+            tbody.innerHTML = scenario.requirements.map((req, idx) => `
+                <tr>
+                    <td style="text-align: center; color: #6c757d; font-weight: 600;">${idx + 1}</td>
+                    <td class="nfr-name">${req.name}</td>
+                    <td style="text-align: center;">
+                        <span class="nfr-level level-${req.level.toLowerCase().replace(' ', '-')}">${req.level}</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showScenario(index) {
+            currentScenario = index;
+            
+            // Update navigation buttons
+            document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+
+            const scenario = scenarios[index];
+            
+            // Check if scenario exists
+            if (!scenario) {
+                // Show "not yet available" message
+                document.getElementById('scenarioTitle').textContent = `Scenario ${index + 1}`;
+                document.getElementById('scenarioNumber').textContent = `Scenario ${index + 1} of 10`;
+                document.getElementById('scenarioColumnHeader').textContent = `Scenario ${index + 1}`;
+                
+                const tbody = document.getElementById('nfrTableBody');
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; padding: 40px; color: #6c757d;">
+                            <strong>Scenario ${index + 1} data not yet available.</strong><br>
+                            Please add the scenario configuration.
+                        </td>
+                    </tr>
+                `;
+            } else {
+                // Update header
+                document.getElementById('scenarioTitle').textContent = scenario.name;
+                document.getElementById('scenarioNumber').textContent = `Scenario ${scenario.id} of 10`;
+                document.getElementById('scenarioColumnHeader').textContent = scenario.name;
+                
+                // Update table
+                renderTable(scenario);
+            }
+            
+            // Update navigation buttons state
+            document.getElementById('prevBtn').disabled = (currentScenario === 0);
+            document.getElementById('nextBtn').disabled = (currentScenario === 9);
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextScenario() {
+            if (currentScenario < scenarios.length - 1) {
+                showScenario(currentScenario + 1);
+            }
+        }
+
+        function previousScenario() {
+            if (currentScenario > 0) {
+                showScenario(currentScenario - 1);
+            }
+        }
+
+        // Initialize with first scenario
+        showScenario(0);
+    </script>
+</body>
+</html>
