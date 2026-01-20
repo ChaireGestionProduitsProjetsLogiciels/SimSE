@@ -37,10 +37,20 @@ Game 4 - Statistical Analysis/
 
 ```
 
-## Notes
-- Downloadable games are provided as archives when applicable.
-- Documentation is provided in PDF format.
-- External content may include additional files or links required by a game.
+## Folder description
+
+- **downloads/**  
+  Contains the downloadable versions of the game (e.g. Windows `.exe`, Java `.jar`), typically packaged as archives for distribution.
+
+- **docs/**  
+  Contains the game documentation, such as the Player’s Manual and the Instructor’s Manual.
+
+- **resources/**  
+  Contains any additional resources required to run or use the game properly.
+
+- **external-content/**  
+  Contains or references external content used by the game (e.g. spreadsheets, HTML files, or other supporting materials).
+
 
 ## License
 © ÉTS – Philanthropic Chair in Product, Project and Software Management  
